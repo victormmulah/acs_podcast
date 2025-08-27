@@ -1,0 +1,12 @@
+{
+  "name": "African Children's Stories",
+  "short_name": "Stories",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#FF9800",
+  "theme_color": "#FF9800",
+  "icons": [
+    { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
