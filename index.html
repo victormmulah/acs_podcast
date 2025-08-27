@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <title>African Children's Stories</title>
+  <meta name="description" content="African Children's Stories - podcast + storybooks for kids" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- icons (place placeholders in /assets/icons/) -->
+  <link rel="icon" href="assets/icons/icon-192.png" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar" role="banner">
+      <div class="logo">
+        <img src="assets/icons/icon-96.png" alt="app logo" width="48" height="48" />
+        <h1>African Children's Stories</h1>
+      </div>
+      <button id="menuBtn" class="icon-btn" aria-label="Open menu">☰</button>
+    </header>
+
+    <nav id="sideMenu" class="side-menu" aria-hidden="true">
+      <button id="closeMenu" class="icon-btn" aria-label="Close menu">✕</button>
+      <ul>
+        <li><button data-nav="home" class="nav-btn">Stories</button></li>
+        <li><button data-nav="storybooks" class="nav-btn">Storybooks</button></li>
+        <li><button data-nav="games" class="nav-btn">Games</button></li>
+        <li><button data-nav="downloads" class="nav-btn">Downloads</button></li>
+        <li><button data-nav="favorites" class="nav-btn">Favorites</button></li>
+        <li><button data-nav="settings" class="nav-btn">Settings</button></li>
+        <li><button id="feedbackBtn" class="nav-btn">Feedback</button></li>
+      </ul>
+    </nav>
+
+    <main id="main" role="main">
+      <!-- splash / loader -->
+      <section id="splash" class="screen splash-screen">
+        <div class="splash-inner">
+          <div class="splash-logo">🌍📖</div>
+          <h2>African Children’s Stories</h2>
+          <p class="muted">Folktales, kindness, culture & nature — read aloud</p>
+          <div id="loader" class="loader"></div>
+        </div>
+      </section>
+
+      <!-- Home: episodes -->
+      <section id="home" class="screen hidden">
+        <div class="controls">
+          <input id="searchInput" type="search" placeholder="Search stories, e.g., Anansi" aria-label="Search stories" />
+          <div class="toggles">
+            <label class="switch">
+              <input id="offlineToggle" type="checkbox" />
+              <span class="slider"></span>
+            </label>
+            <small>Offline</small>
+          </div>
+        </div>
+
+        <div id="episodeList" class="list"></div>
+      </section>
+
+      <!-- Player -->
+      <section id="player" class="screen hidden">
+        <button class="back-btn" data-nav="home">← Back</button>
+        <div class="player-card">
+          <img id="playerThumb" class="thumb" src="" alt="episode image"/>
+          <h3 id="playerTitle"></h3>
+          <p id="playerDate" class="muted"></p>
+          <p id="playerDesc" class="desc"></p>
+
+          <div class="progress-row">
+            <span id="curTime">0:00</span>
+            <input id="seek" type="range" min="0" max="100" value="0" aria-label="seek slider"/>
+            <span id="durTime">0:00</span>
+          </div>
+
+          <div class="controls-row">
+            <button id="back15" class="big-btn">⟲15s</button>
+            <button id="playPause" class="play-btn big-btn" aria-label="Play/Pause">▶</button>
+            <button id="fwd15" class="big-btn">15s⟳</button>
+          </div>
+
+          <div class="util-row">
+            <label>Volume
+              <input id="volume" type="range" min="0" max="1" step="0.01" value="1" />
+            </label>
+            <button id="favBtn" class="icon-btn" aria-label="Favorite">♡</button>
+            <button id="downloadBtn" class="icon-btn" aria-label="Download">⬇</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Storybooks -->
+      <section id="storybooks" class="screen hidden">
+        <button class="back-btn" data-nav="home">← Back</button>
+        <h2>Storybooks</h2>
+        <div id="storybookList" class="list"></div>
+      </section>
+
+      <!-- Story detail -->
+      <section id="storyDetail" class="screen hidden">
+        <button class="back-btn" data-nav="storybooks">← Back</button>
+        <h2 id="storyTitle"></h2>
+        <article id="storyContent" class="story-content"></article>
+        <div class="story-actions">
+          <button id="ttsBtn" class="big-btn">🔊 Read Aloud</button>
+          <button id="quizBtn" class="big-btn">📝 Quiz</button>
+          <button id="drawBtn" class="big-btn">🎨 Draw</button>
+        </div>
+      </section>
+
+      <!-- Quiz -->
+      <section id="quiz" class="screen hidden">
+        <button class="back-btn" data-nav="storyDetail">← Back</button>
+        <div id="quizInner"></div>
+      </section>
+
+      <!-- Games -->
+      <section id="games" class="screen hidden">
+        <button class="back-btn" data-nav="home">← Back</button>
+        <h2>Games</h2>
+        <div id="matchingGame" class="game-card">
+          <h3>Match Animal to Habitat</h3>
+          <div id="matchBoard" class="match-board"></div>
+          <div class="game-controls">
+            <button id="startMatch" class="big-btn">Start</button>
+            <div id="matchScore" class="muted">Score: 0</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Downloads -->
+      <section id="downloads" class="screen hidden">
+        <button class="back-btn" data-nav="home">← Back</button>
+        <h2>Downloads</h2>
+        <div id="downloadsList" class="list"></div>
+      </section>
+
+      <!-- Favorites -->
+      <section id="favorites" class="screen hidden">
+        <button class="back-btn" data-nav="home">← Back</button>
+        <h2>Favorites</h2>
+        <div id="favoritesList" class="list"></div>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="screen hidden">
+        <button class="back-btn" data-nav="home">← Back</button>
+        <h2>Settings</h2>
+        <label>Age group
+          <select id="ageGroup">
+            <option>3-5</option>
+            <option>6-8</option>
+            <option>9+</option>
+          </select>
+        </label>
+        <label>Language
+          <select id="langSelect">
+            <option value="en">English</option>
+            <option value="sw">Swahili (placeholder)</option>
+            <option value="fr">French (placeholder)</option>
+          </select>
+        </label>
+        <div class="muted small">Privacy: We store only anonymized usage and local preferences. Parental gate required for sharing content.</div>
+      </section>
+
+      <!-- Drawing modal (hidden) -->
+      <div id="drawModal" class="modal hidden" role="dialog" aria-modal="true">
+        <div class="modal-content">
+          <h3>Draw your picture</h3>
+          <canvas id="drawCanvas" width="320" height="320"></canvas>
+          <div class="modal-actions">
+            <button id="saveDrawing" class="big-btn">Save</button>
+            <button id="closeDrawing" class="big-btn">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parental gate for sharing -->
+      <div id="parentGate" class="modal hidden">
+        <div class="modal-content">
+          <h3>Parental gate</h3>
+          <p>To share content, please answer:</p>
+          <div id="gateQuestion"></div>
+          <input id="gateAnswer" type="number" />
+          <div class="modal-actions">
+            <button id="gateSubmit" class="big-btn">Submit</button>
+            <button id="gateCancel" class="big-btn">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="player-mini" aria-hidden="false">
+      <div class="mini-left">
+        <div id="miniTitle">No story playing</div>
+        <div id="miniSub" class="muted">Tap to open player</div>
+      </div>
+      <div class="mini-controls">
+        <button id="miniPlay" class="icon-btn" aria-label="Play/Pause">▶</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Audio element used for playback (hidden) -->
+  <audio id="audio" preload="metadata"></audio>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
