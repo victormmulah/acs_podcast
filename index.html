@@ -7,21 +7,22 @@
   <meta name="description" content="African Children's Stories - podcast + storybooks for kids" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="styles.css" />
-  <!-- icons (place placeholders in /assets/icons/) -->
   <link rel="icon" href="assets/icons/icon-192.png" />
 </head>
 <body>
   <div id="app">
     <header class="topbar" role="banner">
-      <div class="logo">
+      <div class="logo" aria-hidden="false">
         <img src="assets/icons/icon-96.png" alt="app logo" width="48" height="48" />
         <h1>African Children's Stories</h1>
       </div>
-      <button id="menuBtn" class="icon-btn" aria-label="Open menu">☰</button>
+      <div class="header-actions">
+        <button id="menuBtn" class="icon-btn" aria-label="Open menu">☰</button>
+      </div>
     </header>
 
     <nav id="sideMenu" class="side-menu" aria-hidden="true">
-      <button id="closeMenu" class="icon-btn" aria-label="Close menu">✕</button>
+      <button id="closeMenu" class="icon-btn close-menu" aria-label="Close menu">✕</button>
       <ul>
         <li><button data-nav="home" class="nav-btn">Stories</button></li>
         <li><button data-nav="storybooks" class="nav-btn">Storybooks</button></li>
@@ -34,7 +35,7 @@
     </nav>
 
     <main id="main" role="main">
-      <!-- splash / loader -->
+      <!-- Splash -->
       <section id="splash" class="screen splash-screen">
         <div class="splash-inner">
           <div class="splash-logo">🌍📖</div>
@@ -58,35 +59,60 @@
         </div>
 
         <div id="episodeList" class="list"></div>
+        <div id="recommendations" class="recommendations hidden">
+          <h3>Recommended for you</h3>
+          <div id="recList" class="list"></div>
+        </div>
       </section>
 
-      <!-- Player -->
-      <section id="player" class="screen hidden">
+      <!-- Player (advanced) -->
+      <section id="player" class="screen hidden player-screen">
         <button class="back-btn" data-nav="home">← Back</button>
+
         <div class="player-card">
-          <img id="playerThumb" class="thumb" src="" alt="episode image"/>
-          <h3 id="playerTitle"></h3>
-          <p id="playerDate" class="muted"></p>
-          <p id="playerDesc" class="desc"></p>
-
-          <div class="progress-row">
-            <span id="curTime">0:00</span>
-            <input id="seek" type="range" min="0" max="100" value="0" aria-label="seek slider"/>
-            <span id="durTime">0:00</span>
+          <div class="player-left">
+            <img id="playerThumb" class="thumb" src="" alt="episode image"/>
           </div>
 
-          <div class="controls-row">
-            <button id="back15" class="big-btn">⟲15s</button>
-            <button id="playPause" class="play-btn big-btn" aria-label="Play/Pause">▶</button>
-            <button id="fwd15" class="big-btn">15s⟳</button>
-          </div>
+          <div class="player-right">
+            <h3 id="playerTitle"></h3>
+            <p id="playerDate" class="muted"></p>
+            <p id="playerDesc" class="desc"></p>
 
-          <div class="util-row">
-            <label>Volume
-              <input id="volume" type="range" min="0" max="1" step="0.01" value="1" />
-            </label>
-            <button id="favBtn" class="icon-btn" aria-label="Favorite">♡</button>
-            <button id="downloadBtn" class="icon-btn" aria-label="Download">⬇</button>
+            <div class="progress-row">
+              <span id="curTime">0:00</span>
+              <input id="seek" type="range" min="0" max="100" value="0" aria-label="seek slider"/>
+              <span id="durTime">0:00</span>
+            </div>
+
+            <div class="controls-row">
+              <button id="prevBtn" class="control big-btn">⏮</button>
+              <button id="back15" class="control big-btn">⟲15s</button>
+              <button id="playPause" class="play-btn big-btn" aria-label="Play/Pause">▶</button>
+              <button id="fwd15" class="control big-btn">15s⟳</button>
+              <button id="nextBtn" class="control big-btn">⏭</button>
+            </div>
+
+            <div class="util-row">
+              <label class="volume-label">Vol
+                <input id="volume" type="range" min="0" max="1" step="0.01" value="1" />
+              </label>
+
+              <label class="speed-label">Speed
+                <select id="speedSelect" aria-label="Playback speed">
+                  <option value="0.75">0.75x</option>
+                  <option value="1" selected>1x</option>
+                  <option value="1.25">1.25x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2">2x</option>
+                </select>
+              </label>
+
+              <button id="favBtn" class="icon-btn" aria-label="Favorite">♡</button>
+              <button id="downloadBtn" class="icon-btn" aria-label="Download">⬇</button>
+            </div>
+
+            <canvas id="visualizer" width="300" height="60" aria-hidden="true"></canvas>
           </div>
         </div>
       </section>
@@ -102,7 +128,7 @@
       <section id="storyDetail" class="screen hidden">
         <button class="back-btn" data-nav="storybooks">← Back</button>
         <h2 id="storyTitle"></h2>
-        <article id="storyContent" class="story-content"></article>
+        <article id="storyContent" class="story-content" aria-live="polite"></article>
         <div class="story-actions">
           <button id="ttsBtn" class="big-btn">🔊 Read Aloud</button>
           <button id="quizBtn" class="big-btn">📝 Quiz</button>
@@ -165,7 +191,7 @@
         <div class="muted small">Privacy: We store only anonymized usage and local preferences. Parental gate required for sharing content.</div>
       </section>
 
-      <!-- Drawing modal (hidden) -->
+      <!-- Drawing modal -->
       <div id="drawModal" class="modal hidden" role="dialog" aria-modal="true">
         <div class="modal-content">
           <h3>Draw your picture</h3>
@@ -177,7 +203,7 @@
         </div>
       </div>
 
-      <!-- Parental gate for sharing -->
+      <!-- Parental gate -->
       <div id="parentGate" class="modal hidden">
         <div class="modal-content">
           <h3>Parental gate</h3>
@@ -190,7 +216,6 @@
           </div>
         </div>
       </div>
-
     </main>
 
     <footer class="player-mini" aria-hidden="false">
@@ -202,12 +227,12 @@
         <button id="miniPlay" class="icon-btn" aria-label="Play/Pause">▶</button>
       </div>
     </footer>
-
   </div>
 
-  <!-- Audio element used for playback (hidden) -->
+  <!-- Audio element -->
   <audio id="audio" preload="metadata"></audio>
 
   <script src="app.js" defer></script>
 </body>
 </html>
+
