@@ -86,11 +86,11 @@
             </div>
 
             <div class="controls-row">
-              <button id="prevBtn" class="control big-btn">⏮</button>
-              <button id="back15" class="control big-btn">⟲15s</button>
+              <button id="prevBtn" class="control big-btn" aria-label="Previous">⏮</button>
+              <button id="back15" class="control big-btn" aria-label="Back 15 seconds">⟲15s</button>
               <button id="playPause" class="play-btn big-btn" aria-label="Play/Pause">▶</button>
-              <button id="fwd15" class="control big-btn">15s⟳</button>
-              <button id="nextBtn" class="control big-btn">⏭</button>
+              <button id="fwd15" class="control big-btn" aria-label="Forward 15 seconds">15s⟳</button>
+              <button id="nextBtn" class="control big-btn" aria-label="Next">⏭</button>
             </div>
 
             <div class="util-row">
@@ -117,14 +117,14 @@
         </div>
       </section>
 
-      <!-- Storybooks -->
+      <!-- Storybooks gallery -->
       <section id="storybooks" class="screen hidden">
         <button class="back-btn" data-nav="home">← Back</button>
         <h2>Storybooks</h2>
-        <div id="storybookList" class="list"></div>
+        <div id="storybookGallery" class="gallery"></div>
       </section>
 
-      <!-- Story detail -->
+      <!-- Story detail (opened only via Read more) -->
       <section id="storyDetail" class="screen hidden">
         <button class="back-btn" data-nav="storybooks">← Back</button>
         <h2 id="storyTitle"></h2>
@@ -224,7 +224,9 @@
         <div id="miniSub" class="muted">Tap to open player</div>
       </div>
       <div class="mini-controls">
+        <button id="miniPrev" class="icon-btn" aria-label="Previous">⏮</button>
         <button id="miniPlay" class="icon-btn" aria-label="Play/Pause">▶</button>
+        <button id="miniNext" class="icon-btn" aria-label="Next">⏭</button>
       </div>
     </footer>
   </div>
@@ -235,4 +237,3 @@
   <script src="app.js" defer></script>
 </body>
 </html>
-
