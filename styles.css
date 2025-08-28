@@ -81,10 +81,16 @@ html,body,#app{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-se
 
 /* footer mini */
 .player-mini{position:fixed;left:12px;right:12px;bottom:var(--safe-margin);background:linear-gradient(90deg,rgba(255,152,0,0.98),#ffb74d);color:#fff;padding:12px;border-radius:14px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.12);z-index:60}
-.player-mini .mini-left{max-width:70%}
+.player-mini .mini-left{max-width:60%}
 .player-mini .mini-controls button{background:transparent;border:none;color:#fff;font-size:22px}
 
-/* storybook */
+/* storybook gallery */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;padding:8px}
+.gallery-item{background:#fff;border-radius:12px;padding:8px;text-align:center;border:1px solid #f4f4f4;cursor:pointer}
+.gallery-item img{width:100%;height:110px;object-fit:cover;border-radius:8px;margin-bottom:8px}
+.gallery-item h4{font-size:14px;margin:0;color:#111}
+
+/* story content */
 .story-content{padding:12px;background:#fff;border-radius:12px;border:1px solid #eee;margin:12px 0}
 .story-actions{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap}
 
@@ -101,6 +107,8 @@ html,body,#app{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-se
 @media(max-width:420px){
   .player-left .thumb{width:110px;height:110px}
   .episode-item img{width:84px;height:84px}
+  .controls input[type="search"]{font-size:14px;padding:10px}
+  .big-btn{padding:10px;font-size:15px}
 }
 .small{font-size:12px}
 .muted{color:var(--muted)}
