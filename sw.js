@@ -1,4 +1,4 @@
-const CACHE_NAME = 'african-stories-shell-v2';
+const CACHE_NAME = 'african-stories-shell-v3';
 const ASSETS = [
   '/', '/index.html', '/styles.css', '/app.js', '/manifest.json',
   '/assets/icons/icon-192.png', '/assets/icons/icon-96.png',
@@ -17,7 +17,6 @@ self.addEventListener('activate', ev => {
 });
 
 self.addEventListener('fetch', ev => {
-  // Network-first for dynamic content; fallback to cache.
   ev.respondWith(
     fetch(ev.request).then(resp => {
       return resp;
